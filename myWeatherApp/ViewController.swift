@@ -54,11 +54,13 @@ class ViewController: UIViewController {
                 }
                 println(currentWeather.temperature)
                 println(forecastWeatherArray[0].temperatureMin)
+                println(currentWeather.currentDate)
                 
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tempLabel.text = "\(currentWeather.temperature)"
                     self.weatherIcon.image = currentWeather.icon!
                     self.timeLabel.text = "\(currentWeather.currentTime!)"
+                    self.dateLabel.text = "\(currentWeather.currentDate!)"
                 })
             }
             else{

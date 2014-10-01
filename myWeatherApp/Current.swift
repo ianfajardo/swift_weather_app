@@ -28,23 +28,30 @@ struct Current{
         
         
         let currentTimeIntValue = currentWeather["time"] as Int
-        currentTime = dateStringFromUnixTime(currentTimeIntValue)
+        currentTime = timeStringFromUnixTime(currentTimeIntValue)
         
         let iconString = currentWeather["icon"] as String
         icon = weatherIconFromString(iconString)
         
-        let date = NSDate()
-        let formatter = NSDateFormatter()
-        formatter.timeStyle = .ShortStyle
-        formatter.stringFromDate(date)
+        currentDate = dateStringFromUnixTime(currentTimeIntValue)
+        
+
+    }
+
+    func timeStringFromUnixTime(unixTime: Int) -> String {
+        let timeInSeconds = NSTimeInterval(unixTime)
+        let weatherDate = NSDate(timeIntervalSince1970: timeInSeconds)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.timeStyle = .ShortStyle
+        
+        return dateFormatter.stringFromDate(weatherDate)
     }
     
     func dateStringFromUnixTime(unixTime: Int) -> String {
         let timeInSeconds = NSTimeInterval(unixTime)
         let weatherDate = NSDate(timeIntervalSince1970: timeInSeconds)
         let dateFormatter = NSDateFormatter()
-        dateFormatter.timeStyle = .ShortStyle
-        
+        dateFormatter.dateStyle = .MediumStyle
         return dateFormatter.stringFromDate(weatherDate)
     }
     
