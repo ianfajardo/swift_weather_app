@@ -35,6 +35,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		37417F0619DCF2BF0001F58E /* geolocation.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = geolocation.playground; sourceTree = "<group>"; };
 		374BD5BF19D5E80A00FC5010 /* Roboto-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Black.ttf"; sourceTree = "<group>"; };
 		374BD5C019D5E80A00FC5010 /* Roboto-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-BlackItalic.ttf"; sourceTree = "<group>"; };
 		374BD5C119D5E80A00FC5010 /* Roboto-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Bold.ttf"; sourceTree = "<group>"; };
@@ -80,6 +81,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		37417F0519DCF2A00001F58E /* Playground */ = {
+			isa = PBXGroup;
+			children = (
+				37417F0619DCF2BF0001F58E /* geolocation.playground */,
+			);
+			name = Playground;
+			sourceTree = "<group>";
+		};
 		374BD5BD19D5E7CA00FC5010 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +124,7 @@
 				375CB7AB19D52527005331F2 /* myWeatherApp */,
 				375CB7C119D52527005331F2 /* myWeatherAppTests */,
 				375CB7AA19D52527005331F2 /* Products */,
+				37417F0519DCF2A00001F58E /* Playground */,
 			);
 			sourceTree = "<group>";
 		};

@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Foundation
+import CoreLocation
 
 class ViewController: UIViewController {
 
@@ -55,6 +57,18 @@ class ViewController: UIViewController {
 
     func getDailyWeatherData() -> Void{
         
+        CLGeocoder().geocodeAddressString("20105", completionHandler: { (placemarks, error) -> Void in
+            if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
+            if placemarks.count > 0 {
+                let pm : CLPlacemark = placemarks[0] as CLPlacemark
+                println(pm.administrativeArea)
+                println(pm.locality)
+                
+            }
+        
+            
+        })
+        
         let baseURL = NSURL(string: "https://api.forecast.io/forecast/\(apiKey)/")
         let forecastURL = NSURL(string: "38.905155,-77.546006", relativeToURL: baseURL)
         
@@ -64,7 +78,7 @@ class ViewController: UIViewController {
                 
                 let dataObject = NSData(contentsOfURL: location)
                 let weatherDictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(dataObject, options: nil, error: nil) as NSDictionary
-                println(weatherDictionary)
+                //println(weatherDictionary)
                 
                 let currentWeather = Current(weatherDictionary: weatherDictionary)
                 
@@ -77,11 +91,13 @@ class ViewController: UIViewController {
                     let forecastObj = Forecast(weatherDictionary: item as NSDictionary)
                     forecastWeatherArray.append(forecastObj)
                 }
+                
                 //println(currentWeather.temperature)
                 //println(forecastWeatherArray[0].temperatureMin)
                 //println(currentWeather.currentDate)
                 //println(forecastWeatherArray[0].day)
-                println(forecastWeatherArray[3].summary)
+                //println(forecastWeatherArray[3].summary)
+                
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tempLabel.text = "\(currentWeather.temperature)"
                     self.weatherIcon.image = currentWeather.icon!
