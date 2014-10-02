@@ -12,10 +12,12 @@ import UIKit
 struct Forecast{
     var temperatureMax: Int
     var temperatureMin: Int
+    var tempCatString: String?
     var humidity: Int?
     var precipProbability: Int?
     var summary: String
     var icon: UIImage?
+    var day: String?
     
     init(weatherDictionary: NSDictionary){
 
@@ -31,8 +33,12 @@ struct Forecast{
         
         let precip = weatherDictionary["precipProbability"] as Double
         precipProbability = Int(precip * 100)
+    
+        let currentTimeIntValue = weatherDictionary["time"] as Int
         
+        day = dayStringFromUnixTime(currentTimeIntValue)
         
+        tempCatString = "\(temperatureMin)/\(temperatureMax)"
     }
     
     func dateStringFromUnixTime(unixTime: Int) -> String {
@@ -42,6 +48,39 @@ struct Forecast{
         dateFormatter.timeStyle = .ShortStyle
         
         return dateFormatter.stringFromDate(weatherDate)
+    }
+    
+    func dayStringFromUnixTime(unixTime: Int) -> String{
+        let timeInSeconds = NSTimeInterval(unixTime)
+        let weatherDate = NSDate(timeIntervalSince1970: timeInSeconds)
+        let dateFormatter = NSDateFormatter()
+        dateFormatter.dateStyle = .FullStyle
+        let dateString: NSString = dateFormatter.stringFromDate(weatherDate)
+        if(dateString.containsString("Monday")){
+            return "Monday"
+        }
+        else if(dateString.containsString("Tuesday")){
+            return "Tuesday"
+        }
+        else if(dateString.containsString("Wednesday")){
+            return "Wednesday"
+        }
+        else if(dateString.containsString("Thursday")){
+            return "Thursday"
+        }
+        else if(dateString.containsString("Friday")){
+            return "Friday"
+        }
+        else if(dateString.containsString("Saturday")){
+            return "Saturday"
+        }
+        else if(dateString.containsString("Sunday")){
+            return "Sunday"
+        }
+        else{
+            return "";
+        }
+        
     }
     
     func weatherIconFromString(stringIcon: String) -> UIImage{
@@ -64,11 +103,11 @@ struct Forecast{
         case "cloudy":
             imageName = "cloudy"
         case "partly-cloudy-day":
-            imageName = "partly-cloudy"
+            imageName = "cloudy-day"
         case "partly-cloudy-night":
             imageName = "cloudy-night"
         default:
-            imageName = "default"
+            imageName = "clear-day"
         }
         
         var iconImage = UIImage(named: imageName)
