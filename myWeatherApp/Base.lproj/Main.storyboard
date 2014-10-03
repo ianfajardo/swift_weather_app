@@ -244,6 +244,7 @@
                         <outlet property="iconImage4" destination="hDZ-2S-2F1" id="YU9-gu-XpE"/>
                         <outlet property="iconImage5" destination="1TX-S3-HlY" id="jKA-00-W0P"/>
                         <outlet property="iconImage6" destination="g1H-TQ-DAH" id="qEB-bM-QuL"/>
+                        <outlet property="locationLabel" destination="6zs-Kf-Wkh" id="Axj-xE-0MC"/>
                         <outlet property="summaryLabel" destination="gz3-y5-F7h" id="8kw-zZ-IPw"/>
                         <outlet property="tempLabel" destination="dfh-E7-oKz" id="iqG-fS-NPa"/>
                         <outlet property="tempLabel1" destination="LRU-Yg-PSQ" id="kad-xF-NE9"/>

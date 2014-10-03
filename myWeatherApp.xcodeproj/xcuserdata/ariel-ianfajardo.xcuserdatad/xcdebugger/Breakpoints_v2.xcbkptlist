@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "myWeatherApp/ViewController.swift"
-            timestampString = "433913114.841877"
+            timestampString = "433916877.00649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "83"
-            endingLineNumber = "83"
-            landmarkName = "getDailyWeatherData()"
+            startingLineNumber = "91"
+            endingLineNumber = "91"
+            landmarkName = "getDailyWeatherData(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +42,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "myWeatherApp/ViewController.swift"
-            timestampString = "433913114.841877"
+            timestampString = "433916877.00649"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "getDailyWeatherData()"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
+            landmarkName = "getDailyWeatherData(_:)"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -80,22 +80,6 @@
             startingLineNumber = "83"
             endingLineNumber = "83"
             landmarkName = "dayStringFromUnixTime(_:)"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "myWeatherApp/ViewController.swift"
-            timestampString = "433912573.852951"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "61"
-            endingLineNumber = "61"
-            landmarkName = "getDailyWeatherData()"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

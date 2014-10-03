@@ -17,6 +17,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
+    @IBOutlet weak var locationLabel: UILabel!
     
     @IBOutlet weak var dayLabel1: UILabel!
     @IBOutlet weak var iconImage1: UIImageView!
@@ -43,9 +44,27 @@ class ViewController: UIViewController {
     @IBOutlet weak var tempLabel6: UILabel!
     
     private let apiKey =  "b00a6f5a9b222df176bd56f438bac362"
+    var cityCoordinates : String?
     
     override func viewDidLoad() {
-        getDailyWeatherData()
+        CLGeocoder().geocodeAddressString("20105", completionHandler: { (placemarks, error) -> Void in
+            if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
+            if placemarks.count > 0 {
+                let pm : CLPlacemark = placemarks[0] as CLPlacemark
+                let cityString = "\(pm.locality) ,\(pm.administrativeArea)"
+                let location : CLLocation = pm.location as CLLocation
+                let coordinates = location.coordinate as CLLocationCoordinate2D
+                let coordinatesString = "\(coordinates.latitude),\(coordinates.longitude)"
+                dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                    self.locationLabel.text = cityString
+                    self.getDailyWeatherData(coordinatesString)
+                    
+                })
+            }
+            
+            
+        })
+        //getDailyWeatherData(cityCoordinates!)
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     }
@@ -55,22 +74,10 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
-    func getDailyWeatherData() -> Void{
-        
-        CLGeocoder().geocodeAddressString("20105", completionHandler: { (placemarks, error) -> Void in
-            if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
-            if placemarks.count > 0 {
-                let pm : CLPlacemark = placemarks[0] as CLPlacemark
-                println(pm.administrativeArea)
-                println(pm.locality)
-                
-            }
-        
-            
-        })
+    func getDailyWeatherData(cityCoordinates: String) -> Void{
         
         let baseURL = NSURL(string: "https://api.forecast.io/forecast/\(apiKey)/")
-        let forecastURL = NSURL(string: "38.905155,-77.546006", relativeToURL: baseURL)
+        let forecastURL = NSURL(string: "\(cityCoordinates)", relativeToURL: baseURL)
         
         let sharedSession = NSURLSession.sharedSession()
         let downloadTask: NSURLSessionDownloadTask = sharedSession.downloadTaskWithURL(forecastURL, completionHandler: { (location: NSURL!, repsonse: NSURLResponse!, error: NSError!) -> Void in
