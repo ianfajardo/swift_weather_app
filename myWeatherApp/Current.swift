@@ -14,18 +14,23 @@ struct Current{
     var currentDate: String?
     var temperature: Int
     var humidity: Double
-    var precipProbability: Double
+    var precipProbability: Int?
     var summary: String
     var icon: UIImage?
+    var windSpeed: Int
     
     init(weatherDictionary: NSDictionary){
         let currentWeather = weatherDictionary["currently"] as NSDictionary
         
         temperature = currentWeather["temperature"] as Int
         humidity = currentWeather["humidity"] as Double
-        precipProbability = currentWeather ["precipProbability"] as Double
         summary = currentWeather["summary"] as String
+        windSpeed = currentWeather["windSpeed"] as Int
         
+        let precipProbabilityNum = currentWeather ["precipProbability"] as Double
+        
+        let precipProbabilityInt = precipProbabilityNum * 100
+        precipProbability = Int(precipProbabilityInt)
         
         let currentTimeIntValue = currentWeather["time"] as Int
         currentTime = timeStringFromUnixTime(currentTimeIntValue)

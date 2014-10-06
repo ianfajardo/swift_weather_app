@@ -10,7 +10,7 @@ import UIKit
 import Foundation
 import CoreLocation
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var weatherIcon: UIImageView!
     @IBOutlet weak var tempLabel: UILabel!
@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var summaryLabel: UILabel!
     @IBOutlet weak var locationLabel: UILabel!
+    @IBOutlet weak var precipLabel: UILabel!
+    @IBOutlet weak var windLabel: UILabel!
     
     @IBOutlet weak var dayLabel1: UILabel!
     @IBOutlet weak var iconImage1: UIImageView!
@@ -43,30 +45,84 @@ class ViewController: UIViewController {
     @IBOutlet weak var iconImage6: UIImageView!
     @IBOutlet weak var tempLabel6: UILabel!
     
+    
+    @IBAction func refreshButton(sender: AnyObject) {
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        //locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        
+    }
+    
     private let apiKey =  "b00a6f5a9b222df176bd56f438bac362"
     var cityCoordinates : String?
+    let locationManager = CLLocationManager()
     
     override func viewDidLoad() {
-        CLGeocoder().geocodeAddressString("20105", completionHandler: { (placemarks, error) -> Void in
-            if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
-            if placemarks.count > 0 {
-                let pm : CLPlacemark = placemarks[0] as CLPlacemark
-                let cityString = "\(pm.locality) ,\(pm.administrativeArea)"
-                let location : CLLocation = pm.location as CLLocation
-                let coordinates = location.coordinate as CLLocationCoordinate2D
-                let coordinatesString = "\(coordinates.latitude),\(coordinates.longitude)"
-                dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                    self.locationLabel.text = cityString
-                    self.getDailyWeatherData(coordinatesString)
-                    
-                })
-            }
-            
-            
-        })
-        //getDailyWeatherData(cityCoordinates!)
+        
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        //locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        
+
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+    
+    func getWeatherCoordinates(postalCode : String){
+        CLGeocoder().geocodeAddressString("\(postalCode)", completionHandler: { (placemarks, error) -> Void in
+            if (error != nil) {println("reverse geodcode fail: \(error.localizedDescription)")}
+            if let thePlacemark = placemarks{
+                if  thePlacemark.count > 0 {
+                    let pm : CLPlacemark = thePlacemark[0] as CLPlacemark
+                    let cityString = "\(pm.locality) ,\(pm.administrativeArea)"
+                    let location : CLLocation = pm.location as CLLocation
+                    let coordinates = location.coordinate as CLLocationCoordinate2D
+                    let coordinatesString = "\(coordinates.latitude),\(coordinates.longitude)"
+                    dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                        self.locationLabel.text = cityString
+                        self.getDailyWeatherData(coordinatesString)
+                    
+                    })
+                }
+            
+            }
+            
+        })
+    }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateLocations locations: [AnyObject]!) {
+        CLGeocoder().reverseGeocodeLocation(manager.location, completionHandler: {(placemarks, error)->Void in
+            
+            if (error != nil) {
+                println("Reverse geocoder failed with error" + error.localizedDescription)
+                return
+            }
+            
+            if placemarks.count > 0 {
+                let pm = placemarks[0] as CLPlacemark
+                self.displayLocationInfo(pm)
+            } else {
+                println("Problem with the data received from geocoder")
+            }
+        })
+    }
+    
+    func displayLocationInfo(placemark: CLPlacemark?) {
+        if let containsPlacemark = placemark {
+            //stop updating location to save battery life
+            locationManager.stopUpdatingLocation()
+            let postalCode = (containsPlacemark.postalCode != nil) ? containsPlacemark.postalCode : ""
+            getWeatherCoordinates(postalCode)
+        }
+        
+    }
+    
+    func locationManager(manager: CLLocationManager!, didFailWithError error: NSError!) {
+        println("Error while updating location " + error.localizedDescription)
     }
 
     override func didReceiveMemoryWarning() {
@@ -99,18 +155,14 @@ class ViewController: UIViewController {
                     forecastWeatherArray.append(forecastObj)
                 }
                 
-                //println(currentWeather.temperature)
-                //println(forecastWeatherArray[0].temperatureMin)
-                //println(currentWeather.currentDate)
-                //println(forecastWeatherArray[0].day)
-                //println(forecastWeatherArray[3].summary)
-                
                 dispatch_async(dispatch_get_main_queue(), { () -> Void in
                     self.tempLabel.text = "\(currentWeather.temperature)"
                     self.weatherIcon.image = currentWeather.icon!
                     self.timeLabel.text = "\(currentWeather.currentTime!)"
                     self.dateLabel.text = "\(currentWeather.currentDate!)"
                     self.summaryLabel.text = "\(currentWeather.summary)"
+                    self.precipLabel.text = "\(currentWeather.precipProbability!)%"
+                    self.windLabel.text = "\(currentWeather.windSpeed) mi/hr"
                     
                     self.dayLabel1.text = "\(forecastWeatherArray[1].day!)"
                     self.iconImage1.image = forecastWeatherArray[1].icon!

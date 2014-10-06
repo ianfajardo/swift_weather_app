@@ -22,6 +22,7 @@
 		375CB7C519D52527005331F2 /* myWeatherAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB7C419D52527005331F2 /* myWeatherAppTests.swift */; };
 		375CB7D119D52EED005331F2 /* Forecast.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB7D019D52EED005331F2 /* Forecast.swift */; };
 		375CB7D419D543D0005331F2 /* Current.swift in Sources */ = {isa = PBXBuildFile; fileRef = 375CB7D319D543D0005331F2 /* Current.swift */; };
+		37FDBAE719E0CB7A00EF8A2F /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 37FDBAE619E0CB7A00EF8A2F /* CoreLocation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -61,6 +62,7 @@
 		375CB7C419D52527005331F2 /* myWeatherAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myWeatherAppTests.swift; sourceTree = "<group>"; };
 		375CB7D019D52EED005331F2 /* Forecast.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Forecast.swift; sourceTree = "<group>"; };
 		375CB7D319D543D0005331F2 /* Current.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Current.swift; sourceTree = "<group>"; };
+		37FDBAE619E0CB7A00EF8A2F /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -68,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37FDBAE719E0CB7A00EF8A2F /* CoreLocation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +123,7 @@
 		375CB7A019D52527005331F2 = {
 			isa = PBXGroup;
 			children = (
+				37FDBAE619E0CB7A00EF8A2F /* CoreLocation.framework */,
 				374BD5BD19D5E7CA00FC5010 /* Resources */,
 				375CB7AB19D52527005331F2 /* myWeatherApp */,
 				375CB7C119D52527005331F2 /* myWeatherAppTests */,
@@ -226,6 +230,7 @@
 				TargetAttributes = {
 					375CB7A819D52527005331F2 = {
 						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = TWGZ2F8R27;
 					};
 					375CB7BD19D52527005331F2 = {
 						CreatedOnToolsVersion = 6.0;
@@ -410,9 +415,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = myWeatherApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -420,9 +429,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = myWeatherApp/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

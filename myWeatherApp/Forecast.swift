@@ -55,26 +55,27 @@ struct Forecast{
         let weatherDate = NSDate(timeIntervalSince1970: timeInSeconds)
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .FullStyle
-        let dateString: NSString = dateFormatter.stringFromDate(weatherDate)
-        if(dateString.containsString("Monday")){
+        var dateString: NSString = dateFormatter.stringFromDate(weatherDate)
+
+        if dateString.rangeOfString("Monday").location != NSNotFound{
             return "Monday"
         }
-        else if(dateString.containsString("Tuesday")){
+        else if dateString.rangeOfString("Tuesday").location != NSNotFound {
             return "Tuesday"
         }
-        else if(dateString.containsString("Wednesday")){
+        else if dateString.rangeOfString("Wednesday").location != NSNotFound {
             return "Wednesday"
         }
-        else if(dateString.containsString("Thursday")){
+        else if dateString.rangeOfString("Thursday").location != NSNotFound {
             return "Thursday"
         }
-        else if(dateString.containsString("Friday")){
+        else if dateString.rangeOfString("Friday").location != NSNotFound {
             return "Friday"
         }
-        else if(dateString.containsString("Saturday")){
+        else if dateString.rangeOfString("Saturday").location != NSNotFound{
             return "Saturday"
         }
-        else if(dateString.containsString("Sunday")){
+        else if dateString.rangeOfString("Sunday").location != NSNotFound {
             return "Sunday"
         }
         else{
